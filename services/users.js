@@ -24,6 +24,17 @@ class UsersService {
 
     return createUserId;
   }
+
+  async getOrCreateUser({ user }){
+    const queriedUSer = await this.getUser({ email: user.email });
+
+    if (queriedUSer) {
+      return queriedUSer;
+    }
+
+    await this.createUser({ user });
+    return await this.getUser({ email: user.email });
+  }
 }
 
 module.exports = UsersService;
